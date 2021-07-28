@@ -14,7 +14,11 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.2
-  health: ^3.1.0
+  health: 
+    git:
+      url: git@github.com:Crewlan/flutter-plugins.git
+      path: packages/health
+      ref: master
 
 dev_dependencies:
   flutter_test:
