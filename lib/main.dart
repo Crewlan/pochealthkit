@@ -34,7 +34,7 @@ class _MyAppState extends State<MyApp> {
 
     /// Get everything from midnight until now
     DateTime startDate = DateTime(2021, 09, 01, 0, 0, 0);
-    DateTime endDate = DateTime(2021, 09, 28, 23, 59, 59);
+    DateTime endDate = DateTime(2022, 10, 28, 23, 59, 59);
 
     HealthFactory health = HealthFactory();
 
@@ -42,6 +42,7 @@ class _MyAppState extends State<MyApp> {
     List<HealthDataType> types = [
       HealthDataType.STEPS,
       HealthDataType.BLOOD_GLUCOSE,
+      HealthDataType.BODY_TEMPERATURE,
     ];
 
     setState(() => _state = AppState.FETCHING_DATA);
