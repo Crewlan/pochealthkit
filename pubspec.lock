@@ -131,12 +131,10 @@ packages:
   health:
     dependency: "direct main"
     description:
-      path: "packages/health"
-      ref: master
-      resolved-ref: e065e459de0e775e29f8982598e9023b7c79ab2f
-      url: "git@github.com:Crewlan/flutter-plugins.git"
-    source: git
-    version: "3.1.0"
+      name: health
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.1.1+1"
   intl:
     dependency: transitive
     description:
@@ -172,6 +170,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.8.0"
+  permission_handler:
+    dependency: "direct main"
+    description:
+      name: permission_handler
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "8.1.6"
+  permission_handler_platform_interface:
+    dependency: transitive
+    description:
+      name: permission_handler_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.6.1"
   plugin_platform_interface:
     dependency: transitive
     description:

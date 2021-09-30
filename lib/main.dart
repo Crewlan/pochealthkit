@@ -13,13 +13,7 @@ class MyApp extends StatefulWidget {
   _MyAppState createState() => _MyAppState();
 }
 
-enum AppState {
-  DATA_NOT_FETCHED,
-  FETCHING_DATA,
-  DATA_READY,
-  NO_DATA,
-  AUTH_NOT_GRANTED
-}
+enum AppState { DATA_NOT_FETCHED, FETCHING_DATA, DATA_READY, NO_DATA, AUTH_NOT_GRANTED }
 
 class _MyAppState extends State<MyApp> {
   List<HealthDataPoint> _healthDataList = [];
@@ -33,10 +27,8 @@ class _MyAppState extends State<MyApp> {
   Future fetchData() async {
     if (Platform.isAndroid) {
       final permissionStatus = Permission.activityRecognition.request();
-      if (await permissionStatus.isDenied ||
-          await permissionStatus.isPermanentlyDenied) {
-        print(
-            'activityRecognition permission required to fetch your steps count');
+      if (await permissionStatus.isDenied || await permissionStatus.isPermanentlyDenied) {
+        print('activityRecognition permission required to fetch your steps count');
       }
     }
 
@@ -49,18 +41,18 @@ class _MyAppState extends State<MyApp> {
     /// Define the types to get.
     List<HealthDataType> types = [
       HealthDataType.STEPS,
+      HealthDataType.BLOOD_GLUCOSE,
     ];
 
     setState(() => _state = AppState.FETCHING_DATA);
 
     /// You MUST request access to the data types before reading them
     bool accessWasGranted = await health.requestAuthorization(types);
-
+    int steps = 0;
     if (accessWasGranted) {
       try {
         /// Fetch new data
-        List<HealthDataPoint> healthData =
-            await health.getHealthDataFromTypes(startDate, endDate, types);
+        List<HealthDataPoint> healthData = await health.getHealthDataFromTypes(startDate, endDate, types);
 
         /// Save all the new data points
         _healthDataList.addAll(healthData);
@@ -74,13 +66,13 @@ class _MyAppState extends State<MyApp> {
 
       /// Print the results
       _healthDataList.forEach((x) {
-        print("Data point: ${jsonEncode(x)}");
+        print("Data point: $x");
+        steps += x.value.round();
       });
 
       /// Update the UI to display the results
       setState(() {
-        _state =
-            _healthDataList.isEmpty ? AppState.NO_DATA : AppState.DATA_READY;
+        _state = _healthDataList.isEmpty ? AppState.NO_DATA : AppState.DATA_READY;
       });
     } else {
       print("Authorization not granted");
@@ -136,8 +128,7 @@ class _MyAppState extends State<MyApp> {
       return _contentNoData();
     else if (_state == AppState.FETCHING_DATA)
       return _contentFetchingData();
-    else if (_state == AppState.AUTH_NOT_GRANTED)
-      return _authorizationNotGranted();
+    else if (_state == AppState.AUTH_NOT_GRANTED) return _authorizationNotGranted();
 
     return _contentNotFetched();
   }
